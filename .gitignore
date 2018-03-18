@@ -20,3 +20,7 @@ config.ini
 **/lib64
 **/pip-selfcheck.json
 **/pyvenv.cfg
+
+# Building Folders
+**/build/*
+**/*.egg-info/*

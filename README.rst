@@ -43,83 +43,85 @@ After installing Redistr with `pip install redistr`, all the data structures are
 
  Once again, for detailed usage please refer to `API Docs`_ or source.
 
- .. code-block::python
-     from redis import Redis
-     import redistr
+ .. code-block:: python
 
-     # create a redis instance
-     redis = Redis(host='localhost', port=6379)
+   from redis import Redis
+   import redistr
 
-     ## initialize data structures ##
-     # list compatible data structure
-     rem_list = redistr.List(redis, 'list_key')
-     # queue, a subclass of `List` class
-     rem_queue = redistr.Queue(redis, 'list_key')
-     # set compatible data structure
-     rem_set = redistr.Set(redis, 'set_key')
-     # dict compatible data structure
-     rem_dict = redistr.Dict(redis, 'hash_key')
-     # hyperloglog data structure
-     rem_hll = redistr.HyperLogLog(redis)
+   # create a redis instance
+   redis = Redis(host='localhost', port=6379)
 
-     # regular list operations
-     rem_list.append('test')
-     rem_list.append({'case': 'file'})
-     rem_list.extend('str')
-     # access list content
-     rem_list.content # ['test', {'case': 'file'}, 's', 't', 'r']
+   ## initialize data structures ##
+   # list compatible data structure
+   rem_list = redistr.List(redis, 'list_key')
+   # queue, a subclass of `List` class
+   rem_queue = redistr.Queue(redis, 'list_key')
+   # set compatible data structure
+   rem_set = redistr.Set(redis, 'set_key')
+   # dict compatible data structure
+   rem_dict = redistr.Dict(redis, 'hash_key')
+   # hyperloglog data structure
+   rem_hll = redistr.HyperLogLog(redis)
 
-     # block get operation
-     rem_queue.get() # 'r'
-     # block get from left
-     rem_queue.get_left() # 'test'
-     # regular non-block put item
-     rem_queue.put(100)
-     # put an item to the right of the list
-     rem_queue.put_right({'job_type': 'flush'})
-     # get and item and push to another list
-     rem_queue.circulate() # {'job_type': 'flush'}
-     # [{'job_type': 'flush'}, 100, {'case': 'file'}, 's', 't']
-     rem_list.content
-     # ...
+   # regular list operations
+   rem_list.append('test')
+   rem_list.append({'case': 'file'})
+   rem_list.extend('str')
+   # access list content
+   rem_list.content # ['test', {'case': 'file'}, 's', 't', 'r']
 
-     # register an action to HLL
-     rem_hll.register(10000)
-     rem_hll.cardinal() # ~= 1, action count
-     # if token not provided as the second parameter,
-     #   all structures will generate a sequence as key
-     #   use this key for cross-process/platform comms
-     rem_hll.token # <bytes>, random bytes as key
+   # block get operation
+   rem_queue.get() # 'r'
+   # block get from left
+   rem_queue.get_left() # 'test'
+   # regular non-block put item
+   rem_queue.put(100)
+   # put an item to the right of the list
+   rem_queue.put_right({'job_type': 'flush'})
+   # get and item and push to another list
+   rem_queue.circulate() # {'job_type': 'flush'}
+   # [{'job_type': 'flush'}, 100, {'case': 'file'}, 's', 't']
+   rem_list.content
+   # ...
+
+   # register an action to HLL
+   rem_hll.register(10000)
+   rem_hll.cardinal() # ~= 1, action count
+   # if token not provided as the second parameter,
+   #   all structures will generate a sequence as key
+   #   use this key for cross-process/platform comms
+   rem_hll.token # <bytes>, random bytes as key
 
  **2. Change Serializers**
 
- .. code-block::python
-     from redis import Redis
-     from redistr import List, Serialize
-     import json, pickle
+ .. code-block:: python
 
-     # `msgpack` and `zlib` are the recommended, default values
-     #   `msgpack` supports `bytes` encoding
-     #   `pickle` supports (almost) all objects
-     #   `zlib` is much faster than `bz2`
-     #   `bz2` has a better compression rate
-     ser = Serialize(serialize='json', compress='zlib')
+   from redis import Redis
+   from redistr import List, Serialize
+   import json, pickle
 
-     redis = Redis()
-     rem_list = List(redis, 'list_key')
-     # use the token for cross-process communications
-     rem_list.token # b'list_key'
+   # `msgpack` and `zlib` are the recommended, default values
+   #   `msgpack` supports `bytes` encoding
+   #   `pickle` supports (almost) all objects
+   #   `zlib` is much faster than `bz2`
+   #   `bz2` has a better compression rate
+   ser = Serialize(serialize='json', compress='zlib')
 
-     # remove stale data first, may not be required
-     rem_list.delete()
-     # change the serializer
-     rem_list.serialize = ser
-     # any instance with `dumps` and `loads` methods
-     #   can be used as the serializer, ie: json, pickle
-     #   user can change to these to avoid data compressions
-     rem_list.serialize = json
-     rem_list.serialize = pickle
-     #  ...
+   redis = Redis()
+   rem_list = List(redis, 'list_key')
+   # use the token for cross-process communications
+   rem_list.token # b'list_key'
+
+   # remove stale data first, may not be required
+   rem_list.delete()
+   # change the serializer
+   rem_list.serialize = ser
+   # any instance with `dumps` and `loads` methods
+   #   can be used as the serializer, ie: json, pickle
+   #   user can change to these to avoid data compressions
+   rem_list.serialize = json
+   rem_list.serialize = pickle
+   #  ...
 
 4. Licenses
 ===========

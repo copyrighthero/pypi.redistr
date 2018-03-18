@@ -13,7 +13,7 @@ DIRECTORY = path.abspath(path.dirname(__file__))
 
 # project readme file content
 with open(
-  path.join(DIRECTORY, 'README.md'), encoding = 'UTF8'
+  path.join(DIRECTORY, 'README.rst'), encoding = 'UTF8'
 ) as file_descriptor:
   PROJECT_README = file_descriptor.read()
 
@@ -27,7 +27,7 @@ with open(
 setup(
   name = 'Redistr',
   version = redistr.__version__,
-  description = 'Redis remote data structure interface.',
+  description = 'Redis backed Python data structure interface.',
   long_description = PROJECT_README,
   url = 'https://www.github.com/copyrighthero/Redistr',
   download_url = 'https://www.github.com/copyrighthero/Redistr',
