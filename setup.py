@@ -32,7 +32,7 @@ setup(
   url = 'https://www.github.com/copyrighthero/Redistr',
   download_url = 'https://www.github.com/copyrighthero/Redistr',
   author = redistr.__author__,
-  # author_email = 'copyrighthero@gmail.com',
+  author_email = 'copyrighthero@gmail.com',
   license = redistr.__license__,
   classifiers = (
     'Development Status :: 4 - Beta',

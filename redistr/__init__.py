@@ -15,4 +15,4 @@ __all__ = (
 
 __author__ = 'Hansheng Zhao'
 __license__ = 'BSD-2-Clause + MIT'
-__version__ = '0.0.0-beta+20180301'
+__version__ = '0!0.0b1'
