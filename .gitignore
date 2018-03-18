@@ -1,0 +1,22 @@
+# JetBrians PyCharm
+**/.idea/*
+
+# Regular Files
+**/*.log
+**/*.env
+**/*.key
+**/*.conf
+config.ini
+
+# NodeJS Env
+**/node_modules/*
+
+# Python Venv
+**/bin/*
+**/include/*
+**/lib/*
+**/share/*
+**/__pycache__/*
+**/lib64
+**/pip-selfcheck.json
+**/pyvenv.cfg

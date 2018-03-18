@@ -1,0 +1,7 @@
+include API.md
+include LICENSE
+include NOTICE
+include README.md
+# include optional-requirements.txt
+include requirements.txt
+# include setup.sh
