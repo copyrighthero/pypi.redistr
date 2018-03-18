@@ -30,7 +30,6 @@ class BaseStructure(object):
     self._serialize = Serialize(
       serialize = 'msgpack', compress = 'zlib'
     )
-    self._initiate()
 
   @property
   def token(self):
