@@ -2,7 +2,7 @@
 Redistr Project
 ###############
 
-`API Docs`_ | `Python Docs <https://docs.python.org>`_ | `Redis Docs <https://redis.io/commands>`_
+`API Docs`_ | `Python Docs <https://docs.python.org>`_ | `Redis Docs <https://redis.io/commands>`_ | | `README中文说明 <https://github.com/copyrighthero/Redistr/blob/master/README.zh-CN.md>`_ | `API中文文档 <https://github.com/copyrighthero/Redistr/blob/master/API.zh-CN.md>`_
 
 1. About Redistr Project
 ========================
@@ -18,7 +18,7 @@ For extensive details on how to use, please refer to `API Docs`_.
 
 Python's `multiprocessing` and `threading` modules provide some shared data structures, and can be used for communications between processes. However, these data structures are usually limited to Python languages because the internal use of pickle module, and sometimes requires explicit setups which might be time consuming. Redistr on the other hand, can be configured to use `json`, `msgpack`, `pickle` or any other serializers for broader compatibility. And since information is stored in redis, the data structures can potentially be re-used in other languages.
 
-The project currently defaults to use the internal `Serialize` module, which defaults to use `msgpack` for serialization and `zlib` for compression. But the defaults can easily be changed to `json`, `msgpack` or `pickle` in combination with `zlib` or `bz2`. Please read on for more information.
+The project currently defaults to use the `SeCo` module for the serialization and compression functionality, which defaults to use `msgpack` for serialization and `zlib` for compression. But the defaults can easily be changed to `json`, `msgpack` or `pickle` in combination with `zlib` or `bz2`. Please read on for more information.
 
 3. Using Redistr
 ================
@@ -35,7 +35,7 @@ After installing Redistr with `pip install redistr`, all the data structures are
 
  4. The `Dict` data structure behaves like `shelve` module, it DOES NOT do dirty checks (yet), thus it won't update the saved data when the saved data is mutable and changed. ie: `d_0 = Dict(Redis(), 'dict'); d_0['test'] = [1,2,3,4]; d_0['test'].append(5); d_0.content; # -> [1,2,3,4]`, you'll have to acquire the data first, modify, and save back, just like the vanilla `shelve` package.
 
- 5. All serializers have their weaknesses, JSON can't serialize binary data like `bytes`, `msgpack` can't serialize `set`, `frozenset`, etc. The most capable one for Python is pickle, but it bloats the data quite a bit. Thus using `pickle` with `zlib` should give you the most capable serializer at a reasonable cost in space. The default serializer uses `msgpack` with `zlib` for the speed and size, refer below or the API docs for more info.
+ 5. All serializers have their weaknesses, JSON can't serialize binary data like `bytes`, `msgpack` can't serialize `set`, `frozenset`, etc. The most capable one for Python is pickle, but it bloats the data quite a bit. Thus using `pickle` with `zlib` should give you the most capable serializer at a reasonable cost in space. The default serializer uses `msgpack` with `zlib` for the speed and size, refer refer to `SeCo's GitHub Repo <https://github.com/copyrighthero/SeCo>`_ for more info.
 
  6. Some of the operations/methods added for compatibility are `O(N)` operations thus will take time when invoked on large amount of data, please refer to the source codes for details. Methods and properties like `push`, `unshift`, `shift` and `length` were added to the structures for convenience, explore source code or refer to document for more details.
 
@@ -97,7 +97,8 @@ After installing Redistr with `pip install redistr`, all the data structures are
  .. code-block:: python
 
    from redis import Redis
-   from redistr import List, Serialize
+   from redistr import List
+   from seco import SeCo
    import json, pickle
 
    # `msgpack` and `zlib` are the recommended, default values
@@ -105,7 +106,7 @@ After installing Redistr with `pip install redistr`, all the data structures are
    #   `pickle` supports (almost) all objects
    #   `zlib` is much faster than `bz2`
    #   `bz2` has a better compression rate
-   ser = Serialize(serialize='json', compress='zlib')
+   ser = SeCo(serialize='json', compress='zlib')
 
    redis = Redis()
    rem_list = List(redis, 'list_key')

@@ -1,5 +1,7 @@
 # Redistr API References #
 
+[API中文文档](API.zh-CN.md)
+
 ## BaseStructure Class ##
 
 This is the base structure or the base class for the other data structure classes. It takes two arguments with the second being optional.
@@ -86,7 +88,7 @@ rem_dict['doc'] # {'test': 'case', 'case': 'test'}
 ```
 
 
-## HyperLogLog ##
+## HyperLogLog Class ##
 
 The redis HyperLogLog data structure, used to estimate how many items are in a collection using a very small memory footprint. Refer to [Redis Docs: HyperLogLog](https://redis.io/commands#hyperloglog) and [Redis author's blog on the subject](http://antirez.com/news/75) for more information.
 
@@ -227,21 +229,22 @@ queue.msg = 1000
 queue.content = [1000, 2000]
 ```
 
-## Serialize Class ##
+## SeCo Class ##
 
-The `Serialize` class is an add-on class for serializing and compressing data.
+The `SeCo` class is an independent class for serializing and compressing data, refer to its [GitHub Repo](https://github.com/copyrighthero/SeCo) for more information.
 
-Signature: `Serialize(ser = None, com = None, **kwards)`
+Signature: `SeCo(serialize = None, compress = None, **kwards)`
 
 It can be initialized to use any combinations between ('json', 'msgpack', 'pickle') and ('zlib', 'bz2').
 
-Recommend to use 'msgpack' and 'zlib' for the optimal speed and space efficiency; use 'pickle' for broadest Python type support; use 'bz2' for maximum space efficiency at the cost of time.
+> Recommend to use 'msgpack' and 'zlib' for the optimal speed and space efficiency; use 'pickle' for broadest Python type support; use 'bz2' for maximum space efficiency at the cost of time.
 
 Change any of the structure's serializer using the following procedures.
 
 ```python
-from redistr import Queue, Serialize
+from redistr import Queue
 from redis import Redis
+from seco import SeCo
 import json, msgpack, pickle
 
 
@@ -250,8 +253,8 @@ queue = Queue(Redis())
 queue.serialize # get the default serializer
 
 # create new serializers
-ser_json_bz2 = Serialize('json', 'bz2')
-ser_pickle_zlib = Serialize('pickle')
+ser_json_bz2 = SeCo('json', 'bz2')
+ser_pickle_zlib = SeCo('pickle')
 
 # flush all stale data from redis
 queue.flush() # or .delete(), or .clear()
