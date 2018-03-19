@@ -1,2 +1,3 @@
-redis
 msgpack-python
+redis
+seco

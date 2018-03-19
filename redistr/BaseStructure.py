@@ -1,7 +1,7 @@
 # Author: Hansheng Zhao <zhaohans@msu.edu> (https://www.zhs.me)
 
 from os import urandom
-from .Serialize import Serialize
+from seco import SeCo
 
 
 class BaseStructure(object):
@@ -27,7 +27,7 @@ class BaseStructure(object):
     self._token = urandom(self.TOKEN_LENGTH) \
       if token is None else self._convert(token)
     # set default serializer
-    self._serialize = Serialize(
+    self._serialize = SeCo(
       serialize = 'msgpack', compress = 'zlib'
     )
 
