@@ -5,7 +5,7 @@ from .BaseStructure import BaseStructure
 try:
   # attempts to import redis error
   from redis import ResponseError
-except ModuleNotFoundError:
+except ImportError:
   # use general exception instead
   ResponseError = Exception
 

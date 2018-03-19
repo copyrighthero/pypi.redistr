@@ -1,7 +1,6 @@
 # Author: Hansheng Zhao <zhaohans@msu.edu> (https://www.zhs.me)
 
 from os import urandom
-from seco import SeCo
 
 
 class BaseStructure(object):
@@ -19,6 +18,8 @@ class BaseStructure(object):
     :param redis: redis, the redis instance
     :param token: mixed, the access token
     """
+    # import SeCo serializer
+    from seco import SeCo
     # set the default type
     self._type = b'none'
     # preserve redis instance

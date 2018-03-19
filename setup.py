@@ -6,7 +6,7 @@ from codecs import open
 from os import path
 
 # import library for metadata
-import redistr
+from redistr import __author__, __license__, __version__
 
 # project absolute directory
 DIRECTORY = path.abspath(path.dirname(__file__))
@@ -26,14 +26,14 @@ with open(
 # project setup parameters
 setup(
   name = 'Redistr',
-  version = redistr.__version__,
+  version = __version__,
   description = 'Redis backed Python data structure interface.',
   long_description = PROJECT_README,
   url = 'https://www.github.com/copyrighthero/Redistr',
   download_url = 'https://www.github.com/copyrighthero/Redistr',
-  author = redistr.__author__,
+  author = __author__,
   author_email = 'copyrighthero@gmail.com',
-  license = redistr.__license__,
+  license = __license__,
   classifiers = (
     'Development Status :: 4 - Beta',
     'License :: OSI Approved :: BSD License',
