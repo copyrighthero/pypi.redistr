@@ -2,13 +2,6 @@
 
 from .BaseStructure import BaseStructure
 
-try:
-  # attempts to import redis error
-  from redis import ResponseError
-except ImportError:
-  # use general exception instead
-  ResponseError = Exception
-
 
 __all__ = ('HyperLogLog', )
 
@@ -23,6 +16,8 @@ class HyperLogLog(BaseStructure):
     :param redis: redis, the instance
     :param token: mixed, access token
     """
+    # import redis ResponseError
+    from redis import ResponseError
     super(HyperLogLog, self).__init__(redis, token)
     # set the default data type
     self._type = b'string'
